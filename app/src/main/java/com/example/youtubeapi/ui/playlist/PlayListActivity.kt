@@ -2,8 +2,10 @@ package com.example.youtubeapi.ui.playlist
 
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.View
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.youtubeapi.NetworkConnection
 import com.example.youtubeapi.base.BaseActivity
 import com.example.youtubeapi.databinding.ActivityPlayListBinding
 import com.example.youtubeapi.ui.playlist.adapter.PlayListAdapter
@@ -36,6 +38,17 @@ class PlayListActivity : BaseActivity<ActivityPlayListBinding>() {
 
 
     override fun showDisconnectState() {
+
+        val networkConnection = NetworkConnection(this)
+        networkConnection.observe(this, { isConnected->
+            if (isConnected){
+                binding.layoutDisconnect.visibility = View.GONE
+                binding.recyclerview.visibility = View.VISIBLE
+            }else{
+                binding.layoutDisconnect.visibility = View.VISIBLE
+                binding.recyclerview.visibility = View.GONE
+            }
+        })
 
     }
 

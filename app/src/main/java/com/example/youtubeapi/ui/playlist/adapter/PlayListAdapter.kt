@@ -7,10 +7,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.youtubeapi.databinding.ListItemBinding
-import com.example.youtubeapi.extensions.load
-import com.example.youtubeapi.model.PlayList
 import com.example.youtubeapi.model.PlayListItems
-import kotlinx.coroutines.withContext
 
 class PlayListAdapter() : RecyclerView.Adapter<PlayListAdapter.ViewHolder>() {
 
@@ -38,16 +35,19 @@ class PlayListAdapter() : RecyclerView.Adapter<PlayListAdapter.ViewHolder>() {
     }
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+
         var binding:ListItemBinding = ListItemBinding.bind(itemView)
 
         fun onBind(playList: PlayListItems?) {
+
             Log.d("tag","titleSnip: ${playList?.snippet?.title}")
             binding.tvHeader.text = playList?.snippet?.title
             Glide.with(itemView)
                 .load(playList?.snippet?.thumbnails?.default?.url.toString())
                 .centerCrop()
                 .into(binding.imageView)
-
+            Log.d("tag","series : "+playList?.contentDetails?.itemCount)
+            (playList?.contentDetails?.itemCount.toString()+" Video series").also { binding.tvSeries.text = it }
         }
     }
 }
